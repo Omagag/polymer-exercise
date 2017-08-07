@@ -1,0 +1,40 @@
+<dom-module id="nota-item">
+	<template>
+		<style>
+			:host {
+				/*border: solid 1px black;*/
+			}
+			.alumno-form-notas p {
+				/*border: solid 1px black;*/
+				display: inline-block;
+			}
+		</style>
+
+		<div class="alumno-form-notas">
+			<p>
+				<label>Nombre: </label>
+				<input type="text" name="nombre" value$="{{nombre}}">
+			</p>
+			<p>
+				<label>Calificación: </label>
+				<input type="text" name="nota" value$="{{nota}}">
+			</p>
+		</div>
+
+	</template>
+	<script>
+		Polymer({
+			is: 'nota-item',
+			properties: {
+				nombre: {
+					type: String,
+					value: ""
+				},
+				nota: {
+					type: String,
+					value: ""
+				}
+			}
+		});
+	</script>
+</dom-module>

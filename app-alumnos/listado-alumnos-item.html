@@ -1,0 +1,74 @@
+<dom-module id="listado-alumnos-item">
+	<template>
+		<style include="listado-alumnos-item-shared-styles">
+			.alumno-item-container {
+				/*display: inline-block;*/
+				width: var(--alumno-item-container-width, var(--default-item-container-width, 80%));
+				height: var(--alumno-item-container-height, var(--default-item-container-height, 100px));
+			}
+			.alumno-item-container img {
+				height: var(--alumno-item-container-img-height, var(--default-item-container-img-height, 100px));
+			}
+			.status-ok,
+			.status-ko {
+				display: inline-block;
+			}
+			.status-ok {
+				color: green;
+			}
+			.status-ko {
+				color: red;
+			}	
+		</style>
+
+		<div class="alumno-item-container">
+			<img src$="[[alumno.foto]]">
+			<!-- <img src$="[[foto]]"> -->
+			<div class$="[[_definirStatusClass(media)]]">
+				<span>{{alumno.nombre}}</span>
+				<span>[[alumno.apellidos]]</span>
+				<!-- <span>[[nombre]]</span>
+				<span>[[apellidos]]</span> -->
+				<span>[[media]]</span>
+
+				<button type="button" on-tap="_editarAlumno">Editar</button>
+				<button type="button" on-tap="_eliminarAlumno">Eliminar</button>
+			</div>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is: 'listado-alumnos-item',
+			properties: {
+				alumno: {
+					type: Object,
+					value: function() {
+						return new Alumno({id: 0, nombre: "", apellidos: "", foto: "", notas: []});
+					}
+				},
+				media: {
+					type: String,
+					computed: '_calcularMedia(alumno.notas)'
+				}
+			},
+			_calcularMedia: function(notas) {
+				console.log('_calcularMedia()');
+
+				let suma = 0;
+				notas.forEach((nota)=>{
+					suma += parseInt(nota.nota);
+				});
+				return suma / notas.length;
+			},
+			_definirStatusClass: function(media) {
+				return media >= 5 ? "status-ok" : "status-ko";
+			},
+			_editarAlumno: function() {
+				this.fire('editar-alumno', {data: this.alumno});
+			},
+			_eliminarAlumno: function() {
+				this.fire('eliminar-alumno', {data: this.alumno});
+			}
+		});
+	</script>
+</dom-module>

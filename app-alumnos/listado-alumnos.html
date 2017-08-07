@@ -1,0 +1,23 @@
+<link rel="import" href="listado-alumnos-item.html">
+
+<dom-module id="listado-alumnos">
+	<template>
+		<style></style>
+
+		<template is="dom-repeat" items="{{alumnos}}">
+			<listado-alumnos-item alumno={{item}}></listado-alumnos-item>
+		</template>
+
+	</template>
+	<script>
+		Polymer({
+			is: 'listado-alumnos',
+			properties: {
+				alumnos: {
+					type: Array,
+					value: []
+				}
+			}
+		});
+	</script>
+</dom-module>

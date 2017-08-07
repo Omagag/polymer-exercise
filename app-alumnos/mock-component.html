@@ -1,0 +1,115 @@
+<link rel="import" href="listado-alumnos.html">
+<link rel="import" href="alumno-form.html">
+
+<dom-module id="mock-component">
+	<template>
+		<style>
+			:host {
+				font-family: Arial, sans serif
+			}
+			button {
+				-webkit-border-radius: 2px;
+			    -moz-border-radius: 2px;
+			    border-radius: 2px;
+			    padding: 5px;
+			    width: 100px;
+			}
+			.btn-nuevo {
+				
+
+				background-color: #678967;
+				border: solid 1px #678967;
+				color: white;
+			}
+		</style>
+
+		<button type="button" class="btn-nuevo" on-tap="_nuevoAlumno">Nuevo</button>
+
+		<!-- <listado-alumnos alumnos="[[alumnos]]"></listado-alumnos> -->
+		<listado-alumnos alumnos="{{alumnos}}"></listado-alumnos>
+
+		<template is="dom-if" if="[[mostrarAlumnoForm]]">
+			<alumno-form alumno={{alumno}}></alumno-form>
+		</template>
+
+	</template>
+	<script>
+		Polymer({
+			is: 'mock-component',
+			properties: {
+				alumnos: {
+					type: Array,
+					value: function() {
+						return [];
+					}
+				},
+				alumno: {
+					type: Object,
+					value: null
+				},
+				mostrarAlumnoForm: {
+					type: Boolean,
+					value: false,
+					computed: '_mostrarAlumnoForm(alumno)'
+				},
+				idSecuencia: {
+					type: Number,
+					value: 0
+				}
+			},
+			listeners: {
+				'guardar-alumno': '_actualizarAlumnos',
+				'editar-alumno': '_editarAlumno',
+				'eliminar-alumno': '_eliminarAlumno',
+				'cancelar-alumno': '_limpiarAlumno'
+			},
+			_nuevoAlumno: function() {
+				this.idSecuencia++;
+				this.alumno = new Alumno({id: this.idSecuencia, nombre: "", apellidos: "", foto: "", notas: []});
+			},
+			_editarAlumno: function(e) {
+				this.alumno = e.detail.data;
+			},
+			_eliminarAlumno: function(e) {
+				let index = this.alumnos.indexOf(e.detail.data);
+				this.splice('alumnos', index, 1);
+			},
+			_actualizarAlumnos: function(e) {
+				let alumno = e.detail.data;
+
+				let index = this.contieneAlumno(alumno);
+				if (index == -1) {
+					this.push('alumnos', alumno);	
+				} else {
+					this.alumnos[index] = alumno;
+					// // this.notifyPath('alumnos.' + index, alumno);
+					// this.notifyPath('alumnos[' + index + ']', alumno);
+
+					this.notifyPath('alumnos.' + index + '.nombre', alumno.nombre);
+					this.notifyPath('alumnos.' + index + '.apellidos', alumno.apellidos);
+					this.notifyPath('alumnos.' + index + '.foto', alumno.foto);
+					this.notifyPath('alumnos.' + index + '.notas', alumno.notas);
+
+					// this.set('alumnos.' + index, alumno);
+				}
+
+				this._limpiarAlumno();
+			},
+			_mostrarAlumnoForm: function() {
+				return this.alumno != null;
+			},
+			_limpiarAlumno: function() {
+				this.alumno = null;
+			},
+			contieneAlumno: function(alumno) {
+				let index = -1;
+				for (let i = 0; (index == -1 && i < this.alumnos.length); i++) {
+					if (this.alumnos[i].id == alumno.id) {
+						index = i;
+					}
+				}
+				return index;
+			}
+		});
+	</script>
+</dom-module>

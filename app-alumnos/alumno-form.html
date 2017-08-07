@@ -1,0 +1,65 @@
+<link rel="import" href="alumno-form-notas.html">
+
+<dom-module id="alumno-form">
+	<template>
+		<style>
+			.alumno-form {
+				border: solid 1px black;
+			}
+		</style>
+		
+		<fieldset>
+			<legend>Alumno Form</legend>
+
+			<p>
+				<label>Nombre: </label>
+				<input type="text" name="nombre" value="{{alumno.nombre::input}}">
+			</p>
+			<p>
+				<label>Apellidos: </label>
+				<input type="text" name="apellidos" value="{{alumno.apellidos::input}}">
+			</p>
+			<p>
+				<label>Foto: </label>
+				<input type="text" name="foto" value="{{alumno.foto::input}}">
+			</p>
+
+			<alumno-form-notas notas="{{alumno.notas}}"></alumno-form-notas>		
+
+			<div>
+				<button type="button" on-tap="_guardarAlumno">Guardar</button>
+				<button type="button" on-tap="_cancelarAlumno">Cancelar</button>
+			</div>
+		</fieldset>
+
+	</template>
+	<script>
+		Polymer({
+			is: 'alumno-form',
+			properties: {
+				alumno: {
+					type: Object,
+					value: function() {
+						return null;
+					}
+				}
+			},
+			_guardarAlumno: function() {
+				this.fire('guardar-alumno', {data: this.alumno});
+			},
+			_cancelarAlumno: function() {
+				this.fire('cancelar-alumno');
+			}
+		});
+
+		class Alumno {
+			constructor({id, nombre, apellidos, foto, notas}) {
+				this.id = id;
+				this.nombre = nombre;
+				this.apellidos = apellidos;
+				this.foto = foto;
+				this.notas = notas;
+			}
+		}
+	</script>
+</dom-module>

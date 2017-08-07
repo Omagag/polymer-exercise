@@ -1,0 +1,72 @@
+<link rel="import" href="nota-item.html">
+
+<dom-module id="alumno-form-notas">
+	<template>
+		<style>
+			.btn-nva-nota-container {
+				text-align: right;
+			}
+			.btn-nva-nota {
+				-webkit-border-radius: 2px;
+			    -moz-border-radius: 2px;
+			    border-radius: 2px;
+			    padding: 2px;
+			    width: 25px;
+			}
+			.btn-nva-nota {
+				background-color: #678967;
+				border: solid 1px #678967;
+				color: white;
+				font-size: 14px;
+			    text-align: center;
+			}
+			.nota-field label,
+			.nota-field input {
+				display: inline-block;
+				padding: 4px;
+				-webkit-border-radius: 2px;
+			    -moz-border-radius: 2px;
+			    border-radius: 2px;
+			    font-size: 13px;
+			}
+			.nota-field label {
+				width: 6%;
+				
+			}
+			.nota-field input {
+				width: 10%;
+				border: solid 1px #ababab;
+			}
+		</style>
+
+		<p class="btn-nva-nota-container">
+			<button class="btn-nva-nota" type="button" on-tap="_agregarNota">+</button>
+		</p>
+		<template is="dom-repeat" items="{{notas}}">
+				<p class="nota-field">
+					<label>Nota: </label>
+					<input type="number" name="nombre" value="{{item.nota::input}}">
+				</p>
+		</template>
+
+	</template>
+	<script>
+		Polymer({
+			is: 'alumno-form-notas',
+			properties: {
+				notas: {
+					type: Array,
+					value: function() {
+						return [
+							// {nombre: "", nota: 0}
+						];
+					}
+				}
+			},
+			_agregarNota: function() {
+				// this.push('notas', {});
+				this.push('notas', {});
+			}
+		});
+	</script>
+</dom-module>
