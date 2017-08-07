@@ -1,0 +1,41 @@
+<link rel="import" href="layout-component.html">
+
+<dom-module id="main-component">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+			layout-component.better-styles {
+				--layout-component-header-h1: {
+					font-weight: lighter;
+					font-style: italic;
+				}
+				--header-h1-background-principal: black;
+				--content-p-background-color: blue;
+				--content-p-color: yellow;
+			}
+		</style>
+
+		<layout-component>
+			<!-- <div slot="header-content">
+				<h1>Now, this is a custom header!!!</h1>
+				<p>and this it's a "p" </p>
+			</div> -->
+			<h1 slot="header-content">Now, this is a custom header!!!</h1>
+				
+			<p slot="container-content">Ahora, este es un contenido personalizado</p>
+			<h3 slot="footer-content">Maintenant, c'est bas de page personnalisé</h3>
+		</layout-component>
+
+		<layout-component class="better-styles"></layout-component>
+
+		<!-- <p>Aquí pasa algo...</p> -->
+
+	</template>
+	<script>
+		Polymer({
+			is: "main-component"
+		});
+	</script>
+</dom-module>

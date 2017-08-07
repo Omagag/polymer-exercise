@@ -1,0 +1,70 @@
+<dom-module id="hello-world">
+  <template>
+    <style>
+      p {
+        background-color: blue;
+        color: white;
+      }
+    </style>
+
+    Double binding
+    <p>
+      {{title}}
+    </p>
+
+    One way binding
+    <p>
+      [[title]]
+    </p>
+
+    Second title: {{second-title}} <!-- When the variables are used must be declared as kebab-case -->
+
+    </br>
+
+    COMPUTED: {{fullTitle}}
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'hello-world',
+      properties: {
+        // title: {
+        //   type: String,
+        //   value: 'Hello World'
+        // }
+        title: {
+          // title-changed
+          type: String,
+          // readOnly: true, // The value will not change
+          notify: true, //document.querySelector('hello-world').addEventListener('title-changed', function(event) {console.log("valor cambio")});
+          // value: function() {
+          //   return "Hello World";
+          // }
+          // reflectToAttribute: true // Para reflejar una propiedad como attr del tag webComponent
+        },
+        secondTitle: { // the variables must be declared as camelCase
+          type: String
+        },
+        fullTitle: {
+          type: String,
+          computed: '_computeFullTitle(title, secondTitle)' // Ejecutar funciones de forma computada
+        }
+      },
+      observers: [
+        '_titleChanged(title, secondTitle)'
+      ],
+      _titleChanged: function(title, secondTitle) {
+        console.log('Observer: _titleChanged called - title: ' + title);
+        console.log('Observer: _titleChanged called - secondTitle: ' + secondTitle);
+      },
+      updateTitle: function() {
+        this.title = 'Hello world actualizado...';
+      },
+      _computeFullTitle: function(title, secondTitle) {
+        console.log("_computeFullTitle");
+        return 'Title: ' + title + ', Second Title: ' + secondTitle;
+      }
+    });
+  </script>
+</dom-module>

@@ -1,0 +1,17 @@
+<script>
+	window.CourseBehaviors = window.CourseBehaviors || {};
+	CourseBehaviors.ComponenteBehavior = {
+		properties: {
+			message: {
+				type: String,
+				value: "Je suis ici!!!"
+			}
+		},
+		listeners: {
+			click: '_greetings'
+		},
+		_greetings: function() {
+			alert("Bonjour le monde!!");
+		}
+	}
+</script>

@@ -1,0 +1,18 @@
+<link rel="import" href="componente-behavior.html">
+
+<script>
+	window.CourseBehaviors = window.CourseBehaviors || {};
+	ComponenteBehaviorExt = {
+		properties: {
+			message: {
+				type: String,
+				value: "Je crois en un meilleur monde"
+			}
+		},
+		_greetings: function() {
+			this.message = "Maintenant le monde a changé";
+		}
+	}
+
+	window.CourseBehaviors.ComponenteBehaviorExt = [CourseBehaviors.ComponenteBehavior, ComponenteBehaviorExt];
+</script>

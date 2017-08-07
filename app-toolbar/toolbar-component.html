@@ -1,0 +1,60 @@
+<link rel="import" href="toolbar-item.html">
+
+<dom-module id="toolbar-component">
+	<template>
+		<style>
+			.toolbar {
+				display: var(--toolbar-display, var(--default-toolbar-display, block));
+				background-color: var(--toolbar-background-color, var(--default-toolbar-background-color, #342243));
+				padding: var(--toolbar-padding, var(--default-toolbar-padding, 5px));
+				@apply(--toolbar);
+			}
+		</style>
+
+		<div class="toolbar">
+			<template is="dom-repeat" items="{{tools}}">
+				<toolbar-item
+					on-tap="_itemSelected"
+					icon="[[item.icon]]"
+					text="[[item.text]]"
+					image-url="[[item.imageUrl]]"
+					image-alt="[[item.imageAlt]]"
+					selected="[[item.selected]]">
+				</toolbar-item>	
+
+				<!-- {{item.selected}} -->
+			</template>
+		</div>
+		
+	</template>
+	<script>
+		Polymer({
+			is: 'toolbar-component',
+			properties: {
+				allowMultipleSelection: {
+					type: Boolean,
+					value: false
+				},
+				tools: {
+					type: Array,
+					value: []
+				}
+			},
+			_itemSelected: function(e, index) {
+				let model = e.model;
+				if (!this.allowMultipleSelection) {
+					this.clearItemSelection();
+				}
+
+				model.set('item.selected', !model.item.selected);
+			},
+			clearItemSelection: function() {
+				this.tools.forEach((item, index) => {
+					// console.log()
+					item.selected = false;
+					this.notifyPath('tools.' + index + '.selected', false);
+				});
+			}
+		});
+	</script>
+</dom-module>

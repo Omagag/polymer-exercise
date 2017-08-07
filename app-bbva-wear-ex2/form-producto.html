@@ -1,0 +1,96 @@
+<link rel="import" href="tallas-checkboxes.html">
+
+<dom-module id="form-producto">
+	<template>
+		<style>
+			p {
+				margin: 2px 0;
+			}
+		</style>
+
+		<fieldset>
+			<legend>Formulario Producto</legend>
+
+			<p>
+				<label>Nombre: </label>
+				<input type="text" name="nombre" value="{{producto.nombre::input}}">
+			</p>
+			<p>
+				<label>Precio: </label>
+				<input type="number" name="precio" value="{{producto.precio::input}}">
+			</p>
+			<p>
+				<label>Foto: </label>
+				<input type="text" name="foto" value="{{producto.foto::input}}">
+			</p>
+			<p>
+				<label>Stock: </label>
+				<input type="number" name="stock" value="{{producto.stock::input}}">
+			</p>
+			<p>
+				<label>Ventas: </label>
+				<input type="number" name="numeroVentas" value="{{producto.numeroVentas::input}}">
+			</p>
+			<p>
+				<label>Tallas: </label>
+				<input type="text" name="tallas" value="{{producto.tallas::input}}">
+			</p>
+
+			<!-- <tallas-checkboxes notas="{{producto.tallas}}"></tallas-checkboxes> -->
+
+			<div>
+				<button type="button" on-tap="_guardarProducto">Guardar</button>
+				<button type="button" on-tap="_cancelarProducto">Cancelar</button>
+			</div>
+		</fieldset>
+
+	</template>
+	<script>
+		Polymer({
+			is: 'form-producto',
+			properties: {
+				producto: {
+					type: Object,
+					value: null
+				}
+			},
+			_guardarProducto: function() {
+				this.fire('guardar-producto', {data: this.producto});
+			},
+			_cancelarProducto: function() {
+				this.fire('cancelar-producto');
+			}
+		});
+
+		class Producto {
+			// Listado de productos con nombre, precio, tallas disponibles para el producto (XS, S, M, L, XL), número de numeroVentas realizadas (sin distinción de las tallas por producto), número de productos en stock (sin distinción de las tallas por producto). 
+			constructor({id, nombre, precio, foto, tallas, stock, numeroVentas}) {
+				this.id = id;
+				this.nombre = nombre;
+				this.precio = precio;
+				this.foto = foto;
+				this.stock = stock;
+				this.numeroVentas = numeroVentas;
+				this.tallas = tallas;
+				// this.tallas = {};
+				// 		// [
+				// 			// {talla: "XS", checked: false},
+				// 			// {talla: "S", checked: false},
+				// 			// {talla: "M", checked: false},
+				// 			// {talla: "L", checked: false},
+				// 			// {talla: "XL", checked: false}
+				// 		// ];
+			}
+			// setTallas(tallas) {
+			// 	this.tallas = tallas;
+			// }
+		}
+
+		// class Talla {
+		// 	constructor({talla, checked}) {
+		// 		this.talla = talla;
+		// 		this.checked = checked;
+		// 	}
+		// }
+	</script>
+</dom-module>

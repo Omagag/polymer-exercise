@@ -1,0 +1,35 @@
+<dom-module id="reddit-clone-header">
+    <template>
+        <style include="reddit-clone-header-shared-styles">
+        .reddit-header {
+            text-align: var(--reddit-clone-header-text-align, var(--default-header-text-align, right));
+            height: var(--reddit-clone-header-height, var(--default-header-text-align, 50px));
+            padding: var(--reddit-clone-header-padding, var(--default-header-padding, 0 4px));
+            @apply(--reddit-header);
+        }
+        .concept {
+            color: var(--reddit-clone-header-color, var(--default-header-color, #898989));
+            @apply(--reddit-header-concept);
+        }
+        .concept-value {
+            font-weight: var(--reddit-clone-header-concept-value-font-weight, var(--default-header-concept-value-font-weight, bold));
+            @apply(--reddit-header-concept-value);
+        }
+        </style>
+        <div class="reddit-header">
+            <p><span class="concept">Reddits count: </span><span class="concept-value">[[countReddits]]</span></p>
+            <p><span class="concept">Reddits Filtered count: </span><span class="concept-value">[[countRedditsFiltered]]</span></p>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: 'reddit-clone-header',
+        properties: {
+            countReddits: {
+                type: Number,
+                notify: true
+            }
+        }
+    });
+    </script>
+</dom-module>

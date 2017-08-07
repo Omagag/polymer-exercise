@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Styled Sample</title>
+	<script>
+		// Global Polymer settings
+		window.Polymer = {
+		dom: 'shadow',
+		useNativeCSSProperties: true
+		};
+	</script>
+	<link rel="import" href="./bower_components/polymer/polymer.html">
+	<link rel="import" href="main-component.html">
+
+	<style _is="custom-style">
+		:root {
+			--default-font-size: 16px;
+			--default-font-color: green;
+		}
+	</style>
+</head>
+<body>
+	<main-component></main-component>
+</body>
+</html>

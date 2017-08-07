@@ -1,0 +1,79 @@
+<link rel="import" href="listado-seleccionable-item.html">
+
+<dom-module id="listado-seleccionable">
+	<template>
+		<style>
+			:host {
+				display: block;
+				font-family: var(--listado-seleccionable-font-family, var(--default-font-family, Arial, sans-serif));
+			}
+		</style>
+
+		<h1>[[header]]</h1>
+		<h2>[[subheader]]</h2>
+
+		<template is="dom-repeat" items="[[items]]">
+			<listado-seleccionable-item
+				on-tap="_selectedItem"
+				title="[[item.title]]"
+				subtitle="[[item.subtitle]]"
+				info-title="[[item.infoTitle]]"
+				info-subtitle="[[item.infoSubtitle]]"
+				opened="[[_toggleItems(index, selectedIndex)]]"> <!-- Se crea un observable de la propiedad que esté como parámetro -->
+			</listado-seleccionable-item>
+		</template>
+
+		<template is="dom-if" if="[[!hasItems]]">
+			<p>No hay ningún item que mostrar...</p>
+		</template>
+
+		<template is="dom-if" if="[[buttonText != '']]">
+			<button type="button" disabled$="[[_hasItemToggled(selectedIndex)]]">[[buttonText]]</button><!-- Inhabilitar cuando no haya ningún item seleccionado -->
+		</template>
+		
+	</template>
+	<script>
+		Polymer({
+			is: 'listado-seleccionable',
+			properties: {
+				items: {
+					type: Array,
+					value: []
+				},
+				selectedIndex: {
+					type: Number,
+					value: null
+				},
+				header: {
+					type: String,
+					value: ""
+				},
+				subheader: {
+					type: String,
+					value: ""
+				},
+				buttonText: {
+					type: String,
+					value: ""
+				},
+				hasItems: {
+					type: Boolean,
+					computed: '_getHasItems(items)'
+				}
+			},
+			_selectedItem: function(e) {
+				this.selectedIndex = this.selectedIndex != e.model.index ? e.model.index : null;
+			},
+			_toggleItems: function(index, selectedIndex) {
+				return index == selectedIndex;
+			},
+			_hasItemToggled: function() {
+				return this.selectedIndex == null;
+			},
+			_getHasItems: function(items) {
+				return items.length > 0;
+			}
+
+		});
+	</script>
+</dom-module>

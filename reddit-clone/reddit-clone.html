@@ -1,0 +1,169 @@
+<link rel="import" href="reddit-clone-header.html">
+<link rel="import" href="reddit-selected-item.html">
+<link rel="import" href="reddit-item-list.html">
+<link rel="import" href="reddit-clone-dm.html">
+<link rel="import" href="loading-data-component.html">
+<dom-module id="reddit-clone">
+    <template>
+        <style include="reddit-clone-shared-styles">
+         :host {
+            display: block;
+            font-family: var(--reddit-clone-font-family, var(--default-font-family, "Arial", sans-serif));
+            @apply(--reddit-clone-host);
+        }
+
+        .search-field {
+            padding: var(--reddit-clone-search-field-padding, 5px 2px);
+            border-bottom: var(--reddit-clone-search-field-border-bottom, 1px solid #554dbf);
+            @apply(--reddit-clone-search-field);
+        }
+
+        .search-field label {
+            width: var(--reddit-clone-search-field-label-width, 10%);
+            padding: var(--reddit-clone-search-field-label-padding, 5px 2px);
+            display: var(--reddit-clone-search-field-label-display, inline-block);
+            font-size: var(--reddit-clone-search-field-label-font-size, var(--default-font-size, 14px));
+            font-weight: var(--reddit-clone-search-field-label-font-weight, var(--detault-font-weight, bold));
+            @apply(--reddit-clone-search-field-label);
+        }
+
+        .search-field input {
+            width: var(--reddit-clone-search-field-input-width, 25%);
+            padding: var(--reddit-clone-search-field-input-padding, 5px 2px);
+            -webkit-border-radius: var(--reddit-clone-search-field-input-border-radius, 4px);
+            -moz-border-radius: var(--reddit-clone-search-field-input-border-radius, 4px);
+            border-radius: var(--reddit-clone-search-field-input-border-radius, 4px);
+            border: var(--reddit-clone-search-field-input-border, 1px solid #554dbf);
+            @apply(--reddit-clone-search-field-input);
+        }
+        button {
+            height: var(--reddit-clone-button-height, var(--default-button-height, 50px));
+            width: var(--reddit-clone-button-width, var(--default-button-width, 100px));
+            font-size: var(--reddit-clone-button-font-size, var(--default-button-font-size, 12px));
+            color: var(--reddit-clone-button-color, var(--default-button-color, white));
+            background: var(--reddit-clone-button-font-size, var(--default-button-font-size, blue));
+            border: var(--reddit-clone-button-font-size, var(--default-button-font-size, solid 1px blue));
+            @apply(--reddit-clone-button);
+        }
+        </style>
+        <reddit-clone-header count-reddits=[[countReddits]] count-reddits-filtered=[[countRedditsFiltered]]></reddit-clone-header>
+        <p class="search-field">
+            <label for="filter">Filtro</label>
+            <input type="text" id="filter" name="filter" value="{{filterValue::input}}" />
+        </p>
+        <button on-tap="_refreshReddits">Reload</button>
+        <button on-tap="_loadReddits">Add Reddits</button>
+                
+
+        <reddit-selected-item reddit=[[selectedReddit]]></reddit-selected-item>
+        <reddit-item-list id="redditItemList" reddits=[[redditsFiltered]]></reddit-item-list>
+        <reddit-clone-dm id="redditDM"></reddit-clone-dm>
+
+        <loading-data-component id="loadingDC"></loading-data-component>
+    </template>
+    <script>
+    Polymer({
+        is: 'reddit-clone',
+        properties: {
+            reddits: {
+                type: Array,
+                value: []
+            },
+            redditsFiltered: {
+                type: Array,
+                value: [],
+                computed: '_filterValueChanged(reddits.*, filterValue)' // The event will fired when the variable reddits or filterValue change
+            },
+            countReddits: {
+                type: Number,
+                value: 0,
+                computed: '_redditsCount(reddits.*)'
+            },
+            countRedditsFiltered: {
+                type: Number,
+                value: 0,
+                computed: '_redditsFilteredCount(redditsFiltered)'
+            },
+            selectedReddit: {
+                type: Object,
+                value: null
+            },
+            filterValue: {
+                type: String,
+                value: ""
+            }
+        },
+        listeners: {
+            'redditDM.load-reddits': '_retrieveReddits',
+
+            /* new */
+            'redditDM.data-load-start': '_showSpinner',
+            'redditDM.data-load-end': '_hideSpinner',
+            /* new */
+
+            // 'load-reddits': '_retrieveReddits',
+            'redditDM.error-reddits': '_errorReddits',
+            'redditItemList.reddit-selected': '_selectedReddit'
+        },
+        attached: function() {
+            this._loadReddits();
+        },
+        _refreshReddits: function() {
+            this.reddits = [];
+            this._loadReddits();
+        },
+        _loadReddits: function() {
+            this.$.redditDM.load();
+        },
+        _showSpinner: function() {
+            this.$.loadingDC.hideLoading(false);
+        },
+        _hideSpinner: function() {
+            this.$.loadingDC.hideLoading(true);
+        },
+        addReddit: function(reddit) {
+            this.push("reddits", reddit);
+        },
+        removeReddit: function(reddit) {
+            var index = this.reddits.indexOf(reddit);
+            this.splice('reddits', index, 1);
+        },
+        _retrieveReddits: function(e) {
+            // this.reddits = e.detail.data;
+            // e.detail.data.forEach((reddit) => {
+            //     this.addReddit(reddit);
+            // });
+            // // this.fire('loading-data-hidden', {hidden: true});
+            // this.$.loadingDC.hideLoading(true);
+
+            this.push('reddits',...e.detail.data);
+            console.debug(this.reddits);
+        },
+        _errorReddits: function(e) {
+            this.message = e.detail.data;
+        },
+        _selectedReddit: function(e) {
+            let reddit = e.detail.data;
+            this.selectedReddit = reddit;
+        },
+        _filterValueChanged: function(reddits, filterValue) {
+            //this.linkPaths('redditsFiltered', 'reddits');
+            console.debug(filterValue);
+            let redditsFiltered = reddits.base.filter((reddit) => {
+            // let redditsFiltered = reddits.filter((reddit) => {
+                return reddit._title.toUpperCase().includes(filterValue.toUpperCase());
+            });
+            return redditsFiltered;
+        },
+        _redditsCount: function(reddits) {
+            //this.linkPaths('countReddits', 'reddits');
+            // return reddits.length;
+            return reddits.base.length;
+        },
+        _redditsFilteredCount: function(redditsFiltered) {
+            //this.linkPaths('countRedditsFiltered', 'redditsFiltered');
+            return redditsFiltered.length;
+        }
+    });
+    </script>
+</dom-module>

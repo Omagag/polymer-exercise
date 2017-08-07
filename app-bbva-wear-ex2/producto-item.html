@@ -1,0 +1,84 @@
+<dom-module id="producto-item">
+	<template>
+		<style>
+			.producto-item-container {
+				display: inline-block;
+				width: var(--producto-item-container-width, var(--default-item-container-width, 80%));
+				height: var(--producto-item-container-height, var(--default-item-container-height, 100px));
+				font-size: 14px;
+			}
+			.producto-item-container img {
+				height: var(--producto-item-container-img-height, var(--default-item-container-img-height, 100px));
+			}
+			.producto-item-container div {
+				display: inline-block;
+			}
+			.producto-item-container div span {
+				color: #ababab;
+			}
+		</style>
+
+		<div class="producto-item-container">
+			<img src$="[[producto.foto]]">
+			<div>
+				<p><span>Nombre:</span>[[producto.nombre]]</p>
+				<p><span>Tallas:</span>[[producto.tallas]]</p>
+				<!-- <p><span>Tallas:</span>
+					<template is="dom-repeat" items="[[producto.tallas]]">
+						[[item.talla]]
+					</template>
+				</p> -->
+				<template is="dom-if" if="[[!esGanaciaVisible]]">
+					<p><span>Precio:</span>[[producto.precio]]</p>
+					<p><span>Stock:</span>[[producto.stock]]</p>
+				</template>
+				<template is="dom-if" if="[[esGanaciaVisible]]">
+					<p><span>Ventas:</span>[[producto.numeroVentas]]</p>
+					<p><span>Ganancia:</span>$ [[ganancia]]</p>	
+				</template>
+			</div>
+			<div>
+				<button type="button" on-tap="_editarProducto">Editar</button>
+				<button type="button" on-tap="_eliminarProducto">Eliminar</button>
+			</div>
+			<!-- [[_calcularStock(producto.stock, producto.ventas)]] -->
+		</div>
+
+	</template>
+	<script>
+		Polymer({
+			is: 'producto-item',
+			properties: {
+				producto: {
+					type: Object,
+					value: null
+				},
+				ganancia: {
+					type: Number,
+					value: 0,
+					computed: '_calcularGanacia(producto.numeroVentas)'
+				},
+				esGanaciaVisible: {
+					type: Boolean,
+					value: false,
+					computed: '_calcularEsGanaciaVisible(producto.stock, producto.numeroVentas)'
+				}
+			},
+			_editarProducto: function() {
+				this.fire('editar-producto', {data: this.producto});
+			},
+			_eliminarProducto: function() {
+				this.fire('eliminar-producto', {data: this.producto});
+			},
+			_calcularGanacia: function() {
+				return this.producto.numeroVentas * this.producto.precio;
+			},
+			_calcularEsGanaciaVisible: function(stock, numeroVentas) {
+				return stock <= numeroVentas;
+			}/*,
+			_mostrarEtiquetaTalla: function(talla) {
+				return talla.checked ? talla.talla : '';
+			}*/
+		});
+	</script>
+</dom-module>

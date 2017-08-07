@@ -1,0 +1,58 @@
+<link rel="import" href="reddit-detail-item.html">
+<dom-module id="reddit-item-list">
+    <template>
+        <style include="reddit-item-list-shared-styles">
+        .items-container {
+            text-align: var(--reddit-item-list-container-text-align, center);
+            @apply(--reddit-item-list-container);
+        }
+        .message-error {
+            color: var(--reddit-item-list-message-error-color, var(--default-message-error-color, red));
+            font-weight: var(--reddit-item-list-message-error-font-weight, var(--default-message-error-font-weight, bold));
+            @apply(--reddit-item-list-message-error);
+        }
+        </style>
+        <div class="items-container">
+            <h2>Reddits</h2>
+            <template is="dom-repeat" items="{{reddits}}" as="reddit">
+                <reddit-detail-item title=[[reddit._title]] author=[[reddit._author]] subreddit=[[reddit._subreddit]] url=[[reddit._url]] ups=[[reddit._ups]] downs=[[reddit._downs]] on-tap="_selectItem">
+                </reddit-detail-item>
+            </template>
+            
+            <template is="dom-if" if="[[!hasReddits]]">
+                <p class="message-error">No hay reddits que mostrar!!!</p>
+            </template>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: 'reddit-item-list',
+        properties: {
+            reddits: {
+                type: Array,
+                value: function() {
+                    return [];
+                }
+            },
+            message: {
+                type: String,
+                value: function() {
+                    return "";
+                }
+            },
+            hasReddits: {
+                type: Boolean,
+                computed: '_hasRedditsComputed(reddits)'
+            }
+        },
+        _selectItem: function(e) {
+            let reddit = e.model.reddit;
+            console.debug(reddit); // the default way is: e.model.item
+            this.fire('reddit-selected', { data: reddit });
+        },
+        _hasRedditsComputed: function() {
+            return this.reddits.length > 0;
+        }
+    });
+    </script>
+</dom-module>

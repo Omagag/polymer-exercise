@@ -1,0 +1,37 @@
+<link rel="import" href="reddit-detail-item.html">
+<dom-module id="reddit-selected-item">
+    <template>
+        <style include="reddit-selected-item-shared-styles">
+         :host {
+            display: block;
+        }
+
+        reddit-detail-item {
+            --reddit-detail-container: {
+                /*background-color: ;*/
+            }
+            --reddit-detail-container-width: 100%;
+
+
+            --reddit-detail-h3: {
+                text-align: center;
+            }
+        }
+        </style>
+        <template is="dom-if" if="{{reddit}}">
+            <h2>Reddit Detail</h2>
+            <reddit-detail-item title=[[reddit._title]] author=[[reddit._author]] subreddit=[[reddit._subreddit]] url=[[reddit._url]] ups=[[reddit._ups]] downs=[[reddit._downs]]>
+            </reddit-detail-item>
+        </template>
+    </template>
+    <script>
+    Polymer({
+        is: 'reddit-selected-item',
+        properties: {
+            reddit: {
+                type: Object
+            }
+        }
+    });
+    </script>
+</dom-module>

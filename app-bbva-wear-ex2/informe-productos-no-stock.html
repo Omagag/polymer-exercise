@@ -1,0 +1,26 @@
+<!-- <link rel="import" href="informe-producto-item.html"> -->
+<link rel="import" href="producto-item.html">
+
+<dom-module id="informe-productos-no-stock">
+	<template>
+		<style></style>
+
+		<h1>Informe de Productos fuera de Stock</h1>
+		<template is="dom-repeat" items="{{productos}}">
+			<informe-producto-item producto="{{item}}"></informe-producto-item>
+			<producto-item producto="{{item}}"></producto-item>
+		</template>
+
+	</template>
+	<script>
+		Polymer({
+			is: 'informe-productos-no-stock',
+			properties: {
+				productos: {
+					type: Array,
+					value: []
+				}
+			}
+		});
+	</script>
+</dom-module>

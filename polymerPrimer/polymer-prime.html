@@ -1,0 +1,61 @@
+<dom-module id="polymer-prime">
+  <template>
+    <style>
+      [xanxo-attr="blue"] {
+          font-style: Arial;
+      }
+    </style>
+
+    <h1>{{title}}</h1>
+
+    <p>{{message}}</p>
+
+    <p>{{response}}</p>
+
+    <button on-tap="greetings">Click me!!! O_o</button>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'polymer-prime',
+      properties: {
+        title: {
+          type: String,
+          value: function() {
+            return 'Default title';
+          }
+        },
+        name: {
+          type: String,
+          computed: '_computeName(message)'
+        },
+        message: {
+          type: String,
+          notify: true
+        },
+        response: {
+          type: String
+        },
+        xanxoAttr: {
+          type: String,
+          value: "blue",
+          reflectToAttribute: true
+        }
+      },
+      observers: [
+        '_messageChanged(message)' // Observer depends of the names of the parameters
+      ],
+      greetings: function() {
+        this.message = 'Greetings earthy!!!';
+      },
+      _messageChanged: function() {
+        this.response = 'Nice to meet you, I\'m ' + this.name;
+      },
+      _computeName() {
+        return "James";
+      }
+
+    });
+
+  </script>
+</dom-module>

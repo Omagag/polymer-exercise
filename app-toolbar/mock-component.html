@@ -1,0 +1,52 @@
+<link rel="import" href="toolbar-component.html">
+
+<dom-module id="mock-component">
+	<template>
+		<style></style>
+
+		<p>
+			<label for="allow-multiple-selection">Allow Multiple Selection: </label>
+			<input type="checkbox" name="allow-multiple-selection" value$="[[allowMultipleSelection]]" on-tap="_isAllowMultipleSelection">
+		</p>
+
+		<toolbar-component
+			id="toolbar"
+			allow-multiple-selection="[[allowMultipleSelection]]"
+			tools="{{tools}}">
+		</toolbar-component>
+	</template>
+	<script>
+		Polymer({
+			is: 'mock-component',
+			properties: {
+				tools: {
+					type: Array,
+					value: function() {
+						let tools = [];
+						for (let i = 0; i < 10; i++) {
+							tools.push({
+								text: "text" + (0+1),
+								icon: "fa fa-bathtub fa-2x",
+								imageUrl: "image-url",
+								imageAlt: "image-alt",
+								selected: false
+							})
+						}
+						return tools;
+					}
+				},
+				allowMultipleSelection: {
+					type: Boolean,
+					value: false
+				}
+			},
+			_isAllowMultipleSelection: function() {
+				this.allowMultipleSelection = !this.allowMultipleSelection;
+
+				if (!this.allowMultipleSelection) {
+					this.$.toolbar.clearItemSelection();
+				}
+			}
+		});
+	</script>
+</dom-module>

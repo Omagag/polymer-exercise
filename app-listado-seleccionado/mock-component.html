@@ -1,0 +1,41 @@
+<link rel="import" href="listado-seleccionable.html">
+
+<dom-module id="mock-component">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+		</style>
+
+		<listado-seleccionable
+			header="Esto es el header"
+			subheader="This is the subheader"
+			items=[[items]]
+			button-text="Continuar...">
+			
+		</listado-seleccionable>
+	</template>
+	<script>
+		Polymer({
+			is: 'mock-component',
+			properties: {
+				items: {
+					type: Array,
+					value: function() {
+						let items = [];
+						for (let i = 0; i < 10; i++) {
+							items.push({
+								title: "title " + (i +1),
+								subtitle: "subtitle " + (i +1),
+								infoTitle: "info title " + (i +1),
+								infoSubtitle: "info subtitle " + (i +1)
+							});
+						}
+						return items;
+					}
+				}
+			}
+		});
+	</script>
+</dom-module>

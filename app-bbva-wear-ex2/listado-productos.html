@@ -1,0 +1,36 @@
+<link rel="import" href="producto-item.html">
+
+<dom-module id="listado-productos">
+	<template>
+		<style></style>
+
+		<h1>Lista de Productos</h1>
+		<template is="dom-repeat" items="{{productos}}">
+			<producto-item producto="{{item}}"></producto-item>
+		</template>
+
+		<template is="dom-if" if="[[!hayProductosDisponibles]]">
+			<p>No hay productos disponibles</p>
+		</template>
+
+	</template>
+	<script>
+		Polymer({
+			is: 'listado-productos',
+			properties: {
+				productos: {
+					type: Array,
+					value: []
+				},
+				hayProductosDisponibles: {
+					type: Boolean,
+					value: false,
+					computed: '_calcularHayProductosDisponibles(productos)'
+				}
+			},
+			_calcularHayProductosDisponibles: function(productos) {
+				return productos.length > 0;
+			}
+		});
+	</script>
+</dom-module>

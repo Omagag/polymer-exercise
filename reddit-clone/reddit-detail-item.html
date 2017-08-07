@@ -1,0 +1,89 @@
+<dom-module id="reddit-detail-item">
+	<template>
+		<style include="reddit-detail-item-shared-styles">
+			.reddit-container {
+				text-align: var(--reddit-detail-container-text-align, left);
+				width: var(--reddit-detail-container-width, 80%);
+				display: var(--reddit-detail-container-display, inline-block);
+				padding: var(--reddit-detail-container-padding, 2px);
+				overflow: var(--reddit-detail-container-overflow, hidden);
+				border-bottom: var(--reddit-detail-container-border-bottom, 1px solid #554dbf);
+				@apply(--reddit-detail-container);
+			}
+			.reddit-container:hover {
+				background-color: var(--reddit-detail-container-hover-background-color, rgba(0, 7, 175, 0.11));
+				#apply(--reddit-detail-container-hover);
+			}
+			div.reddit-container h3 {
+				color: var(--reddit-detail-h3-color, #0a0159);
+				margin: var(--reddit-detail-h3-margin, 4px 0 10px 0);
+				@apply(--reddit-detail-h3);
+			}
+			div.reddit-container p {
+				margin: var(--reddit-detail-p-margin, 2px 0);
+				color: var(--reddit-detail-p-color, #12029a);
+				font-size: var(--reddit-detail-p-font-size, var(--default-font-size, 12px));
+				@apply(--reddit-detail-p);
+			}
+			div.reddit-container p span {
+				color: var(--reddit-detail-span-color, #999999);
+				font-size: var(--reddit-detail-span-font-size, var(--default-font-size, 12px));
+				@apply(--reddit-detail-span);
+			}
+		</style>
+
+		<div class="reddit-container">
+			<h3 class="reddit-title">[[title]]</h3>
+			<p><span>Author:</span> [[author]]</p>
+			<p><span>Subreddit:</span> [[subreddit]]</p>
+			<p><span>url:</span> <a href="[[url]]" target="_blank">[[url]]</a></p>
+			<p><span>Ups:</span> [[ups]]</p>
+			<p><span>Downs:</span> [[downs]]</p>
+        </div>
+
+	</template>
+	<script>
+		Polymer({
+			is: 'reddit-detail-item',
+			properties: {
+				title: {
+					type: String,
+					value: function() {
+						return "";
+					}
+				},
+				subreddit: {
+					type: String,
+					value: function() {
+						return "";
+					}
+				},
+				author: {
+					type: String,
+					value: function() {
+						return "";
+					}
+				},
+				url: {
+					type: String,
+					value: function() {
+						return "";
+					}
+				},
+				ups: {
+					type: String,
+					value: function() {
+						return "";
+					}
+				},
+				downs: {
+					type: String,
+					value: function() {
+						return "";
+					}
+				}
+
+			}
+		});
+	</script>
+</dom-module>

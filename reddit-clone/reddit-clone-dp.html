@@ -1,0 +1,18 @@
+<dom-module id="reddit-clone-dp">
+    <script>
+    Polymer({
+        is: 'reddit-clone-dp',
+        fetch: function() {
+            var url = 'https://www.reddit.com/new/.json';
+            fetch(url).then((resp) => resp.json()).then((json) => {
+                let results = json.data;
+                console.debug(results);
+                this.fire('data-loaded', { data: results });
+            }).catch(function(error) {
+                console.debug(error);
+                this.fire('error', { data: error });
+            });
+        }
+    });
+    </script>
+</dom-module>

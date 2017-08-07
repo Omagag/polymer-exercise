@@ -1,0 +1,69 @@
+<dom-module id="tallas-checkboxes">
+	<template>
+		<style></style>
+
+		<p>
+			<label for="tallas">XS</label>			
+			<input type="checkbox" name="tallas" value="{{tallas.xs::input}}" checked$="{{tallas.xs}}">
+		</p>
+		<p>
+			<label for="tallas">S</label>			
+			<input type="checkbox" name="tallas" value="{{tallas.s::input}}" checked$="{{tallas.s}}">
+		</p>
+		<p>
+			<label for="tallas">M</label>			
+			<input type="checkbox" name="tallas" value="{{tallas.m::input}}" checked$="{{tallas.m}}">
+		</p>
+		<p>
+			<label for="tallas">L</label>			
+			<input type="checkbox" name="tallas" value="{{tallas.l::input}}" checked$="{{tallas.l}}">
+		</p>
+		<p>
+			<label for="tallas">XL</label>			
+			<input type="checkbox" name="tallas" value="{{tallas.xl::input}}" checked$="{{tallas.xl}}">
+		</p>
+
+	</template>
+	<script>
+		Polymer({
+			is: 'tallas-checkboxes',
+			properties: {
+				tallas: {
+					type: Array,
+					value: {xs: false,
+							s: false,
+							m: false,
+							l: false,
+							xl: false}
+					
+				}/*,
+				xs: {
+					type: Boolean,
+					value: false
+				},
+				s: {
+					type: Boolean,
+					value: false
+				},
+				m: {
+					type: Boolean,
+					value: false
+				},
+				l: {
+					type: Boolean,
+					value: false
+				},
+				xl: {
+					type: Boolean,
+					value: false
+				}*/
+				/*,
+				productoTallas: {
+					type: Array,
+					value: [],
+					computed: ''
+				}*/
+			}
+		});
+	</script>
+</dom-module>

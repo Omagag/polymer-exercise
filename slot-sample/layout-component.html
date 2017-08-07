@@ -1,0 +1,60 @@
+<dom-module id="layout-component">
+	<template>
+		<style>
+			:host {
+				display: block;
+			}
+			.header {
+				background-color: #789689;
+				height: 200px;
+			}
+			.header ::slotted(h1) {
+				background: var(--header-h1-background-principal, #57ccfe);
+				background: -moz-linear-gradient(top,var(--header-h1-background-gradient, #24c2e8) 0,var(--header-h1-background-principal, #57ccfe) 100%);
+			    background: -webkit-gradient(linear,left top,left bottom,color-stop(0,var(--header-h1-background-gradient, #24c2e8)),color-stop(100%,var(--header-h1-background-principal, #57ccfe)));
+			    background: -webkit-linear-gradient(top,var(--header-h1-background-gradient, #24c2e8) 0,var(--header-h1-background-principal, #57ccfe) 100%);
+			    background: -o-linear-gradient(top,var(--header-h1-background-gradient, #24c2e8) 0,var(--header-h1-background-principal, #57ccfe) 100%);
+			    background: -ms-linear-gradient(top,var(--header-h1-background-gradient, #24c2e8) 0,var(--header-h1-background-principal, #57ccfe) 100%);
+			    background: linear-gradient(top bottom,var(--header-h1-background-gradient, #24c2e8) 0,var(--header-h1-background-principal, #57ccfe) 100%);
+			    text-align: var(--header-h1-text-align, center);
+
+				font-family: var(--header-h1-font-family, Arial);
+				color: var(--header-h1-color, white);
+				border-bottom: var(--header-h1-border-bottom, solid 1px #57ccfe);
+				font-size: var(--header-h1-font-size, 22px);
+				@apply(--layout-component-header-h1);
+			}
+			.container ::slotted(p) {
+				background-color: var(--content-p-background-color, gray);
+				color: var(--content-p-color, white);
+			}
+			.footer ::slotted(h3) {
+				color: var(--footer-h3-color, green);
+			}
+		</style>
+
+		<header class="header">
+			<slot name="header-content">
+				<h1>This is a header by default</h1>
+			</slot>
+		</header>
+		
+		<article class="container">
+			<slot name="container-content">
+				<p>Esto es el contenido por defecto</p>
+			</slot>
+		</article>
+		
+		<footer class="footer">
+			<slot name="footer-content">
+				<h3>C'est bas de page par défault</h3>
+			</slot>
+		</footer>
+		
+	</template>
+	<script>
+		Polymer({
+			is: "layout-component"
+		});
+	</script>
+</dom-module>

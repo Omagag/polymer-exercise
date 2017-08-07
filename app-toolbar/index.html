@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>App Toolbar</title>
+	<script>
+		window.Polymer = {
+			dom: 'shadow',
+			//lazyRegister: ¡max,
+			useNativeCSSProperties: true
+		};
+	</script>
+	<link rel="import" href="./bower_components/polymer/polymer.html">
+	<link rel="import" href="mock-component.html">
+
+	<style is="custom-style" include="slate-font-awesome">
+		:root {
+			--default-toolbar-background-color: #626183;	
+		}
+	</style>
+</head>
+<body>
+	<mock-component></mock-component>
+</body>
+</html>

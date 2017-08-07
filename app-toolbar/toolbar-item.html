@@ -1,0 +1,87 @@
+<link rel="import" href="./bower_components/slate-font-awesome/slate-font-awesome.html">
+
+<dom-module id="toolbar-item">
+	<template>
+		<style include="slate-font-awesome">
+			.toolbar-item,
+			.toolbar-item-selected {
+				text-align: var(--toolbar-item-text-align, var(--default-text-align, center));
+				display: var(--toolbar-item-display, var(--default-display, inline-block));
+				padding: var(--toolbar-item-padding, var(--default-padding, 4px));
+				margin: var(--toolbar-item-margin, var(--default-margin, 0));
+				width: var(--toolbar-item-width, var(--default-width, 7%));
+				font-size: var(--toolbar-item-font-size, var(--default-font-size, 10px));
+
+				-webkit-border-radius: 4px;
+			    -moz-border-radius: 4px;
+			    border-radius: 4px;
+			    @apply(--toolbar-item-structure);
+			}
+			.toolbar-item {
+				background-color: var(--toolbar-item-background-color, var(--default-toolbar-item-background-color, #342243));
+				color: var(--toolbar-item-color, var(--default-color, white));
+				@apply(--toolbar-item-styles);
+			}
+			.toolbar-item:hover {
+				background-color: var(--toolbar-item-hover-background-color, var(--default-toolbar-item-hover-background-color, rgba(55, 57, 78, 0.92)));
+				@apply(--toolbar-item-hover-styles);
+			}
+			.toolbar-item-selected {
+				background-color: var(--toolbar-item--selected-background-color, var(--default-toolbar-item--selected-background-color, #345667));
+				color: var(--toolbar-item-selected-color, var(--default-toolbar-item-selected-color, white));
+				@apply(--toolbar-item-selected-styles);
+			}
+			.toolbar-item-selected:hover {
+				background-color: var(--toolbar-item-selected-hover-background-color, var(--default-toolbar-item-selected-hover-background-color, rgba(40, 65, 90, 0.92)));
+				@apply(--toolbar-item-selected-hover-styles);
+			}
+			.toolbar-item p,
+			.toolbar-item-selected p,
+			.toolbar-item i,
+			.toolbar-item-selected i {
+				padding: var(--toolbar-item-p-padding, var(--default-toolbar-item-p-padding, 2px 0));
+				margin: var(--toolbar-item-p-margin, var(--default-toolbar-item-p-margin, 0));
+			}
+		</style>
+
+		<!-- <div class$="[[selected]]">  -->
+		<div class$="[[_calculateClass(selected)]]"> 
+			<i class$="[[icon]]"></i>
+			<p>[[text]]</p>
+			<!-- <p>[[imageUrl]]</p>
+			<p>[[imageAlt]]</p>
+			<p>[[selected]]</p> -->
+		</div>
+
+	</template>
+	<script>
+		Polymer({
+			is: 'toolbar-item',
+			properties: {
+				text: {
+					type: String,
+					value: ""
+				},
+				icon: {
+					type: String,
+					value: ""
+				},
+				imageUrl: {
+					type: String,
+					value: ""
+				},
+				imageAlt: {
+					type: String,
+					value: ""
+				},
+				selected: {
+					type: Boolean,
+					value: false,
+				},
+			},
+			_calculateClass: function(selected) {
+				return selected ? "toolbar-item-selected" : "toolbar-item";
+			}
+		});
+	</script>
+</dom-module>

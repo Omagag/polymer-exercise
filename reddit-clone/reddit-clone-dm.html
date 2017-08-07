@@ -1,0 +1,54 @@
+<link rel="import" href="reddit-clone-dp.html">
+<dom-module id="reddit-clone-dm">
+    <template>
+        <reddit-clone-dp id="redditDP"></reddit-clone-dp>
+    </template>
+    <script>
+    Polymer({
+        is: 'reddit-clone-dm',
+        listeners: {
+            'redditDP.data-loaded': '_formatData',
+            'redditDP.error': '_formatData'
+        },
+        load: function() {
+            this.fire('data-load-start', {});
+            this.$.redditDP.fetch();
+        },
+        _formatData: function(e) {
+            let weirdData = e.detail.data.children;
+            console.debug(weirdData);
+            let reddits = weirdData.map((data) => {
+                let obj = data.data;
+                return new Reddit(obj.title, obj.subreddit, obj.author, obj.url, obj.ups, obj.downs);
+            });
+            this.fire('load-reddits', { data: reddits });
+            this.fire('data-load-end', {});
+        },
+        _errorLoadingData: function(e) {
+            let error = e.detail.data;
+            this.fire('error-reddits', { data: error });
+            this.fire('data-load-end', {});
+        }
+
+    });
+
+    /*
+    url,
+    title,
+    subreddit,
+    author,
+    ups,
+    downs
+    */
+    class Reddit {
+        constructor(title, subreddit, author, url, ups, downs) {
+            this._title = title;
+            this._subreddit = subreddit;
+            this._author = author;
+            this._url = url;
+            this._ups = ups;
+            this._downs = downs;
+        }
+    }
+    </script>
+</dom-module>
